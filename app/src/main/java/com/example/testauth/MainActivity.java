@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +21,16 @@ public class MainActivity extends AppCompatActivity {
     EditText password;
     Button signIn;
     Button signUp;
+
+    Button email;
+    Button phone;
+    Button google;
+    Button fingerprint;
+    TextView mode;
+
+    enum mode {Email,Phone,Google,Fingerprint};
+    Boolean isModeEmail;
+
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -36,7 +47,15 @@ public class MainActivity extends AppCompatActivity {
         signIn = findViewById(R.id.buttonSignIn);
         signUp = findViewById(R.id.buttonSignUp);
 
-        mAuthListener =new FirebaseAuth.AuthStateListener() {
+        email = findViewById(R.id.buttonEmail);
+        phone = findViewById(R.id.buttonPhone);
+        google = findViewById(R.id.buttonGoogle);
+        fingerprint = findViewById(R.id.buttonFingerprint);
+        mode = findViewById(R.id.textViewMode);
+
+
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -64,14 +83,32 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SignUp(login.getText().toString(),password.getText().toString());
                 //Toast.makeText(getApplicationContext(),"Sign Up Button",Toast.LENGTH_SHORT).show();
+            }
+        });
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isModeEmail = true;
+                mode.setText("Email Mode");
 
             }
-
-
         });
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
         public void signIn(String login,String password ){
+        if (isModeEmail){
             mAuth.signInWithEmailAndPassword(login,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -81,9 +118,12 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Login failed",Toast.LENGTH_SHORT).show();
                     }
                 }
-            });
+            });}else {
+
+                    }
         }
         public void SignUp(String login,String password){
+        if (isModeEmail){
             mAuth.createUserWithEmailAndPassword(login,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -96,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 }
-            });
+            });}else {
+
+                    }
         }
 }
