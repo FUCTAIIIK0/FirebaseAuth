@@ -73,16 +73,22 @@
             android:text="Phone_number" />
 
         <Button
-            android:id="@+id/buttonGoogle"
+            android:id="@+id/buttonAuthUI"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Google" />
+            android:text="Auth UI" />
 
         <Button
             android:id="@+id/buttonFingerprint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Fingerprint" />
+
+        <Button
+            android:id="@+id/buttonLogOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout" />
 
     </LinearLayout>
 
